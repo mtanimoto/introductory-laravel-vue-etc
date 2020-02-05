@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -69,5 +70,18 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * ユーザー登録完了後の動作
+     * 認証済みユーザーを返却する
+     *
+     * @param Request $request リクエスト
+     * @param array $user 認証済みユーザー
+     * @return array
+     */
+    protected function registered(Request $request, $user)
+    {
+        return $user;
     }
 }
